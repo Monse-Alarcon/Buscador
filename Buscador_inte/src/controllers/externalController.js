@@ -102,6 +102,7 @@ const obtenerProductos = async (request, response) => {
                 p.nombre,
                 p.descripcion,
                 c.nombre AS categoria,
+                p.imagen_url,
                 p.precio,
                 p.stock
             FROM productos p
