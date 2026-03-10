@@ -1,6 +1,6 @@
 const pool = require('../config/db');
 const bcrypt = require('bcryptjs');
-const e = require('cors');
+
 
 const register = async (req, res) => {
     const { email, password } = req.body;
@@ -40,14 +40,14 @@ const login = async (req, res) => {
     try{
         const result = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
         if (result.rows.length === 0) {
-            return res.status(400).json({ msg: "Credenciales inválidas" });
+            return res.status(400).json({ msg: "Credenciales inválidas (email)" });
         }
 
         const usuario = result.rows[0];
         const isMatch = await bcrypt.compare(password, usuario.password);
 
         if (!isMatch) {
-            return res.status(400).json({ msg: "Credenciales inválidas" });
+            return res.status(400).json({ msg: "Credenciales inválidas (Password)" });
         }
 
         const payload = { 
