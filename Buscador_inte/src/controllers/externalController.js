@@ -104,7 +104,8 @@ const obtenerProductos = async (request, response) => {
                 c.nombre AS categoria,
                 p.imagen_url,
                 p.precio,
-                p.stock
+                p.stock, 
+                p.youtube_id
             FROM productos p
             JOIN categoria c ON p.id_categoria = c.id
         `;
@@ -125,16 +126,17 @@ const crearProducto = async (req, res) => {
   const stock = req.body.stock;
   const descripcion = req.body.descripcion;
   const imagen_url = req.body.imagen_url;
-  const id_categoria = req.body.id_categoria || 1; // <- categoría por defecto (ajusta 1)
+  const id_categoria = req.body.id_categoria || 1;
+  const youtube_id = req.body.youtube_id; 
 
   try {
     const query = `
-      INSERT INTO productos (nombre, precio, stock, descripcion, imagen_url, id_categoria)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO productos (nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
     `;
 
     if (descripcion) {
-      await pool.query(query, [nombre, precio, stock, descripcion, imagen_url, id_categoria]);
+      await pool.query(query, [nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id]);
     }
 
     res.status(201).json({ msj: "Producto creado exitosamente" });
