@@ -128,15 +128,17 @@ const crearProducto = async (req, res) => {
   const imagen_url = req.body.imagen_url;
   const id_categoria = req.body.id_categoria || 1;
   const youtube_id = req.body.youtube_id; 
+  const latitud = req.body.latitud;
+  const longitud = req.body.longitud;
 
   try {
     const query = `
-      INSERT INTO productos (nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO productos (nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id, latitud, longitud)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     `;
 
     if (descripcion) {
-      await pool.query(query, [nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id]);
+      await pool.query(query, [nombre, precio, stock, descripcion, imagen_url, id_categoria, youtube_id, latitud, longitud]);
     }
 
     res.status(201).json({ msj: "Producto creado exitosamente" });
